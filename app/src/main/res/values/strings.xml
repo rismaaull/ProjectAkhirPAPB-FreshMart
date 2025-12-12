@@ -1,0 +1,63 @@
+<resources>
+    <string name="app_name">FreshMart</string>
+
+    <!-- Bottom Navigation Title -->
+    <string name="menu_shop">Belanja</string>
+    <string name="menu_explore">Jelajah</string>
+    <string name="menu_cart">Keranjang</string>
+    <string name="menu_about">Profil</string>
+
+    <!-- On Boarding -->
+    <string name="image_on_boarding">Ilustrasi selamat datang</string>
+    <string name="welcome_to_store">Selamat Datang \ndi FreshMart</string>
+    <string name="desc_welcome">Belanja kebutuhan harianmu, pesanan tiba dalam satu jam.</string>
+    <string name="get_started">Mulai Belanja</string>
+
+    <!-- Home & Explore -->
+    <string name="search_store">Cari produk di toko...</string>
+    <string name="search_category">Cari kategori...</string>
+    <string name="image_slider">Banner Promosi</string>
+    <string name="see_all">Lihat Semua</string>
+    <string name="exclusive_offer">Penawaran Eksklusif</string>
+    <string name="best_selling">Paling Laris</string>
+    <string name="find_products">Temukan Produk</string>
+    <string name="search_not_found">Produk tidak ditemukan</string> <!-- Tambahan untuk fitur pencarian -->
+
+    <!-- Product & Category -->
+    <string name="image_product">Foto produk</string>
+    <string name="image_category">Ikon kategori</string>
+    <string name="add">Tambah</string>
+    <string name="arrow_right">Lihat selengkapnya</string>
+    <string name="image_favorite">Ikon favorit</string>
+    <string name="image_location">Ikon lokasi</string>
+    <string name="sample_country">Indonesia</string>
+
+    <!-- Product Detail -->
+    <string name="product_detail">Detail Produk</string>
+    <string name="nutritions">Nutrisi</string>
+    <string name="review">Ulasan</string>
+    <string name="add_to_cart">Masukkan Keranjang</string>
+
+    <!-- Cart & Checkout (Tambahan Fitur) -->
+    <string name="my_cart">Keranjang Saya</string>
+    <string name="total_payment">Total Pembayaran</string> <!-- Tambahan -->
+    <string name="checkout">Checkout</string> <!-- Tambahan -->
+    <string name="cart_empty">Keranjang Anda kosong</string> <!-- Tambahan -->
+
+    <!-- Profile & About -->
+    <string name="logo_app">Logo Aplikasi FreshMart</string>
+    <string name="shop">Belanja</string>
+    <string name="image_profile">Foto Profil Pengguna</string>
+    <!-- Sebaiknya data ini diambil dari API/DataStore, tapi untuk default value di XML tidak apa-apa -->
+    <string name="name_profile">evibangchan</string>
+    <string name="email_profile">cintabangchan@gmail.com</string>
+    <string name="image_about">Ilustrasi Halaman Tentang</string>
+    <string name="logout">Keluar</string>
+    <string name="image_delete">Hapus</string>
+
+    <!-- General States -->
+    <string name="image_content_empty">Ilustrasi data kosong</string>
+    <string name="oops_no_data">Ups! Belum ada data di sini</string>
+    <string name="loading">Memuat...</string>
+    <string name="error_default">Terjadi kesalahan</string>
+</resources>
