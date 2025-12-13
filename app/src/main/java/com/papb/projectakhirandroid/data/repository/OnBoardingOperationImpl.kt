@@ -5,7 +5,6 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import com.papb.projectakhirandroid.data.dataStore
 import com.papb.projectakhirandroid.domain.repository.OnBoardingOperation
-import com.papb.projectakhirandroid.utils.Constants.LOGIN_KEY
 import com.papb.projectakhirandroid.utils.Constants.ON_BOARDING_KEY
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
@@ -18,7 +17,6 @@ class OnBoardingOperationImpl @Inject constructor(
 
     private object PreferencesKey {
         val onBoardingKey = booleanPreferencesKey(name = ON_BOARDING_KEY)
-        val loginKey = booleanPreferencesKey(name = LOGIN_KEY)
     }
 
     override suspend fun saveOnBoardingState(isCompleted: Boolean) {
@@ -30,18 +28,6 @@ class OnBoardingOperationImpl @Inject constructor(
     override fun readOnBoardingState(): Flow<Boolean> {
         return context.dataStore.data.map {
             it[PreferencesKey.onBoardingKey] ?: false
-        }
-    }
-
-    override suspend fun saveLoginState(isLoggedIn: Boolean) {
-        context.dataStore.edit {
-            it[PreferencesKey.loginKey] = isLoggedIn
-        }
-    }
-
-    override fun readLoginState(): Flow<Boolean> {
-        return context.dataStore.data.map {
-            it[PreferencesKey.loginKey] ?: false
         }
     }
 
