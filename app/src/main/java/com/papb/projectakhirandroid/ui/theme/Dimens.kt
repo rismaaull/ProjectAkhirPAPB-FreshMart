@@ -3,7 +3,7 @@ package com.papb.projectakhirandroid.ui.theme
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-/* Density Independent */
+/* Density Independent (dp) */
 val DIMENS_1dp = 1.dp
 val DIMENS_2dp = 2.dp
 val DIMENS_4dp = 4.dp
@@ -26,11 +26,13 @@ val DIMENS_80dp = 80.dp
 val DIMENS_90dp = 90.dp
 val DIMENS_108dp = 108.dp
 val DIMENS_114dp = 114.dp
+val DIMENS_160dp = 160.dp // <-- PERBAIKAN: Konstanta yang hilang
 val DIMENS_174dp = 174.dp
+val DIMENS_200dp = 200.dp
 val DIMENS_248dp = 248.dp
 val DIMENS_353dp = 353.dp
 
-/* Scale Independent */
+/* Scale Independent (sp) */
 val TEXT_SIZE_10sp = 10.sp
 val TEXT_SIZE_12sp = 12.sp
 val TEXT_SIZE_14sp = 14.sp

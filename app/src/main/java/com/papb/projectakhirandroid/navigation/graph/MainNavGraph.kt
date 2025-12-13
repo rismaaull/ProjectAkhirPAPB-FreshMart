@@ -19,7 +19,7 @@ import com.papb.projectakhirandroid.presentation.screen.home.HomeViewModel
 import com.papb.projectakhirandroid.presentation.screen.home.HomeScreen
 import com.papb.projectakhirandroid.presentation.screen.home.clickToCart
 import com.papb.projectakhirandroid.presentation.screen.invoice.InvoiceScreen
-// NEW: Import KomunitasScreen
+import com.papb.projectakhirandroid.presentation.screen.komunitas.AddPostScreen // BARU
 import com.papb.projectakhirandroid.presentation.screen.komunitas.KomunitasScreen
 import com.papb.projectakhirandroid.presentation.screen.productlist.ProductListScreen
 import com.papb.projectakhirandroid.presentation.screen.search.SearchScreen
@@ -33,6 +33,7 @@ fun MainNavGraph(navController: NavHostController) {
         route = Graph.MAIN,
         startDestination = BottomNavItemScreen.Home.route
     ) {
+        // ... (Rute Home, Explore, Cart, About) ...
         composable(route = BottomNavItemScreen.Home.route) {
             HomeScreen(navController = navController)
         }
@@ -43,10 +44,9 @@ fun MainNavGraph(navController: NavHostController) {
             CartScreen(navController = navController)
         }
 
-        // NEW: Tambahkan Komunitas di antara Cart dan About
+        // Rute: KOMUNITAS (Pastikan navController diteruskan)
         composable(route = BottomNavItemScreen.Komunitas.route) {
-            // ASUMSI: Anda membuat KomunitasScreen() tanpa parameter wajib
-            KomunitasScreen()
+            KomunitasScreen(navController = navController)
         }
 
         composable(route = BottomNavItemScreen.About.route) {
@@ -57,6 +57,11 @@ fun MainNavGraph(navController: NavHostController) {
             EditProfileScreen(navController = navController)
         }
 
+        // RUTE BARU: ADD POST SCREEN
+        composable(route = "add_post_screen") {
+            AddPostScreen(navController = navController)
+        }
+
         // Checkout and Invoice Screens
         composable(route = Screen.Checkout.route) {
             CheckoutScreen(navController = navController)
@@ -64,6 +69,8 @@ fun MainNavGraph(navController: NavHostController) {
         composable(route = Screen.Invoice.route) {
             InvoiceScreen(navController = navController)
         }
+
+        // ... (Rute Search, ProductList, dan detailsNavGraph tetap sama) ...
 
         // Search Graph dengan dukungan query parameter (optional)
         composable(
@@ -85,7 +92,7 @@ fun MainNavGraph(navController: NavHostController) {
             })
         ) { entry ->
             val title = entry.arguments?.getString("title") ?: "Products"
-            val homeViewModel: HomeViewModel = hiltViewModel() // Reuse HomeViewModel for cart logic
+            val homeViewModel: HomeViewModel = hiltViewModel()
             val context = LocalContext.current
 
             ProductListScreen(

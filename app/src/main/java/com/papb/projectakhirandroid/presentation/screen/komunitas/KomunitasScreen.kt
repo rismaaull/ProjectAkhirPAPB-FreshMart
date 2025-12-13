@@ -15,7 +15,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-// Hapus semua impor yang berhubungan dengan ViewModel dan Hilt
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.papb.projectakhirandroid.ui.theme.* enum class KomunitasTab {
@@ -30,18 +29,19 @@ import com.papb.projectakhirandroid.ui.theme.* enum class KomunitasTab {
 @Composable
 fun KomunitasScreen(
     navController: NavController = rememberNavController()
-    // Hapus parameter userViewModel: UserViewModel = viewModel()
+    // Hapus parameter ViewModel
 ) {
     var selectedTab by remember { mutableStateOf(KomunitasTab.RESEP_MU) }
 
-    // NAMA PENGGUNA STATIS (Placeholder - Siap diganti jika ViewModel/State Profile ada)
+    // NAMA PENGGUNA STATIS (Placeholder)
     val currentUserName = "Nama Profil Anda"
 
     Scaffold(
         backgroundColor = Color.White,
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { /* TODO: Navigasi ke AddPostScreen */ },
+                // NAVIGASI KE LAYAR POSTINGAN BARU
+                onClick = { navController.navigate("add_post_screen") },
                 backgroundColor = Green,
                 contentColor = Color.White,
                 modifier = Modifier.padding(bottom = DIMENS_16dp, end = DIMENS_16dp)
@@ -57,22 +57,18 @@ fun KomunitasScreen(
                 .padding(paddingValues)
         ) {
 
-            // 1. HEADER (FIXED)
             HeaderKomunitas(
-                title = "Forum FreshMart",
+                title = "FreshMart Komunitas",
                 description = "Tempat inspirasi resep harian, tips dapur, dan berbagi kreasi masakan Anda."
             )
 
-            // 2. TAB ROW (FIXED)
             TabRowKomunitas(
                 selectedTab = selectedTab,
                 onTabSelected = { selectedTab = it }
             )
 
-            // 3. KONTEN TAB (SCROLLABLE)
             Crossfade(targetState = selectedTab, label = "KomunitasTabContent") { tab ->
                 when (tab) {
-                    // Konten diambil dari file Composable terpisah
                     KomunitasTab.RESEP_MU -> ResepMuContent(currentUserName = currentUserName, navController = navController)
                     KomunitasTab.TIPS_DAPUR -> TipsDapurContent(currentUserName = currentUserName, navController = navController)
                 }
@@ -81,7 +77,7 @@ fun KomunitasScreen(
     }
 }
 
-// ---------------------- Komponen Header Utama Tetap ----------------------
+// ---------------------- Komponen Header Utama ----------------------
 @Composable
 fun HeaderKomunitas(title: String, description: String) {
     Column(modifier = Modifier.padding(DIMENS_16dp)) {
@@ -104,8 +100,7 @@ fun HeaderKomunitas(title: String, description: String) {
     Divider(color = Color.LightGray.copy(alpha = 0.5f), thickness = DIMENS_1dp)
 }
 
-
-// ---------------------- Komponen Tab Tetap ----------------------
+// ---------------------- Komponen Tab Row ----------------------
 @Composable
 fun TabRowKomunitas(
     selectedTab: KomunitasTab,
@@ -160,7 +155,6 @@ fun TabItem(
         )
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable
