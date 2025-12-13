@@ -54,8 +54,6 @@ fun ExploreScreen(
                     CategoryCard(
                         categoryItem = categoryItem,
                         onItemClick = {
-                            // Navigasi ke ProductListScreen dengan judul kategori
-                            // Menghapus newline (\n) agar URL tidak error
                             val cleanTitle = categoryItem.title.replace("\n", " ")
                             navController.navigate(Screen.ProductList.passTitle(cleanTitle))
                         }
