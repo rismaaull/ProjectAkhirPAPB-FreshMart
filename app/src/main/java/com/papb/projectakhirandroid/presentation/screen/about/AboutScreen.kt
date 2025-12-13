@@ -65,7 +65,9 @@ fun AboutScreen(
         }
 
         ListContentAbout(onItemClick = {
-            // Handle other item clicks here if needed
+            if (it == "Koleksi") {
+                navController.navigate("collection_graph")
+            }
         })
 
         Spacer(modifier = Modifier.height(DIMENS_32dp))

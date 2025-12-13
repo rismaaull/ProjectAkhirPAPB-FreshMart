@@ -151,6 +151,10 @@ object DataDummy {
     fun generateDummyAbout(): List<AboutItem> {
         return listOf(
             AboutItem(
+                image = R.drawable.ic_orders, // Assuming a collection icon, using orders as placeholder
+                title = "Koleksi"
+            ),
+            AboutItem(
                 image = R.drawable.ic_orders,
                 title = "Pesanan"
             ),
