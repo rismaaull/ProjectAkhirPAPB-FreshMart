@@ -2,12 +2,12 @@ package com.papb.projectakhirandroid.data.repository
 
 import com.papb.projectakhirandroid.domain.model.ProductItem
 import com.papb.projectakhirandroid.domain.repository.LocalDataSource
-import com.papb.projectakhirandroid.domain.repository.OnBoardingOperations
+import com.papb.projectakhirandroid.domain.repository.OnBoardingOperation
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class Repository @Inject constructor(
-    private val dataStore: OnBoardingOperations,
+    private val dataStore: OnBoardingOperation,
     private val localDataSource: LocalDataSource
 ) {
 

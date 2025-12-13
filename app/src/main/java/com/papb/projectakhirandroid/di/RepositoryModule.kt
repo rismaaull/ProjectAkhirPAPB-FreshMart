@@ -1,6 +1,8 @@
 package com.papb.projectakhirandroid.di
 
 import android.content.Context
+import com.papb.projectakhirandroid.data.local.ProductDatabase
+import com.papb.projectakhirandroid.data.repository.LocalDataSourceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -8,7 +10,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import com.papb.projectakhirandroid.data.repository.OnBoardingOperationImpl
 import com.papb.projectakhirandroid.data.repository.Repository
-import com.papb.projectakhirandroid.domain.repository.OnBoardingOperations
+import com.papb.projectakhirandroid.domain.repository.LocalDataSource
+import com.papb.projectakhirandroid.domain.repository.OnBoardingOperation
 import com.papb.projectakhirandroid.domain.usecase.UseCases
 import com.papb.projectakhirandroid.domain.usecase.addcartusecase.AddCartUseCase
 import com.papb.projectakhirandroid.domain.usecase.deletecartusecase.DeleteCartUseCase
@@ -29,7 +32,13 @@ object RepositoryModule {
     @Singleton
     fun provideDataStoreOperation(
         @ApplicationContext context: Context
-    ): OnBoardingOperations = OnBoardingOperationImpl(context = context)
+    ): OnBoardingOperation = OnBoardingOperationImpl(context = context)
+
+    @Provides
+    @Singleton
+    fun provideLocalDataSource(productDatabase: ProductDatabase): LocalDataSource {
+        return LocalDataSourceImpl(productDatabase)
+    }
 
     @Provides
     @Singleton

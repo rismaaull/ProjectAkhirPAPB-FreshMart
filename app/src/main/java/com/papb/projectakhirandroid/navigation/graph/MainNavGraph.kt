@@ -13,6 +13,7 @@ import com.papb.projectakhirandroid.presentation.screen.about.AboutScreen
 import com.papb.projectakhirandroid.presentation.screen.cart.CartScreen
 import com.papb.projectakhirandroid.presentation.screen.checkout.CheckoutScreen
 import com.papb.projectakhirandroid.presentation.screen.detail.DetailScreen
+import com.papb.projectakhirandroid.presentation.screen.editprofile.EditProfileScreen
 import com.papb.projectakhirandroid.presentation.screen.explore.ExploreScreen
 import com.papb.projectakhirandroid.presentation.screen.home.HomeViewModel
 import com.papb.projectakhirandroid.presentation.screen.home.HomeScreen
@@ -49,7 +50,11 @@ fun MainNavGraph(navController: NavHostController) {
         }
 
         composable(route = BottomNavItemScreen.About.route) {
-            AboutScreen()
+            AboutScreen(navController = navController)
+        }
+
+        composable(route = Screen.EditProfile.route) {
+            EditProfileScreen(navController = navController)
         }
 
         // Checkout and Invoice Screens

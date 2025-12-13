@@ -1,6 +1,7 @@
 package com.papb.projectakhirandroid.presentation.common.content
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -16,14 +17,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import com.papb.projectakhirandroid.R
 import com.papb.projectakhirandroid.domain.model.AboutItem
 import com.papb.projectakhirandroid.ui.theme.*
 import com.papb.projectakhirandroid.utils.DataDummy
-import com.papb.projectakhirandroid.R
 
 @Composable
 fun ListContentAbout(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onItemClick: (String) -> Unit
 ) {
     LazyColumn(
         modifier = modifier.fillMaxWidth(),
@@ -31,7 +33,7 @@ fun ListContentAbout(
         verticalArrangement = Arrangement.spacedBy(DIMENS_8dp)
     ) {
         items(DataDummy.generateDummyAbout()) { items ->
-            ItemAbout(aboutItem = items)
+            ItemAbout(aboutItem = items) { onItemClick(items.title) }
         }
     }
 
@@ -43,13 +45,16 @@ fun ListContentAbout(
 @Composable
 fun ItemAbout(
     modifier: Modifier = Modifier,
-    aboutItem: AboutItem
+    aboutItem: AboutItem,
+    onClick: (() -> Unit)? = null
 ) {
-    Column {
+    Column(
+        modifier = modifier.clickable(enabled = onClick != null) { onClick?.invoke() }
+    ) {
         Divider(modifier = Modifier.height(DIMENS_1dp), color = GrayBorderStroke)
 
         Row(
-            modifier = modifier
+            modifier = Modifier
                 .padding(start = DIMENS_16dp, end = DIMENS_16dp, top = DIMENS_20dp)
                 .fillMaxWidth()
         ) {
@@ -83,7 +88,7 @@ fun ItemAbout(
 @Preview(showBackground = true)
 @Composable
 fun ListContentAboutPreview() {
-    ListContentAbout()
+    ListContentAbout(onItemClick = {})
 }
 
 @Preview(showBackground = true)
