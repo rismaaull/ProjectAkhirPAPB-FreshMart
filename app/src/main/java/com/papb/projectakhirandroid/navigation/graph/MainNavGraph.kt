@@ -12,9 +12,6 @@ import com.papb.projectakhirandroid.navigation.screen.Screen
 import com.papb.projectakhirandroid.presentation.screen.about.AboutScreen
 import com.papb.projectakhirandroid.presentation.screen.cart.CartScreen
 import com.papb.projectakhirandroid.presentation.screen.checkout.CheckoutScreen
-import com.papb.projectakhirandroid.presentation.screen.collection.AddCollectionScreen
-import com.papb.projectakhirandroid.presentation.screen.collection.CollectionScreen
-import com.papb.projectakhirandroid.presentation.screen.collection.CollectionViewModel
 import com.papb.projectakhirandroid.presentation.screen.detail.DetailScreen
 import com.papb.projectakhirandroid.presentation.screen.editprofile.EditProfileScreen
 import com.papb.projectakhirandroid.presentation.screen.explore.ExploreScreen
@@ -22,10 +19,11 @@ import com.papb.projectakhirandroid.presentation.screen.home.HomeViewModel
 import com.papb.projectakhirandroid.presentation.screen.home.HomeScreen
 import com.papb.projectakhirandroid.presentation.screen.home.clickToCart
 import com.papb.projectakhirandroid.presentation.screen.invoice.InvoiceScreen
+// NEW: Import KomunitasScreen
 import com.papb.projectakhirandroid.presentation.screen.komunitas.KomunitasScreen
 import com.papb.projectakhirandroid.presentation.screen.productlist.ProductListScreen
 import com.papb.projectakhirandroid.presentation.screen.search.SearchScreen
-import com.papb.projectakhirandroid.utils.Constants
+import com.papb.projectakhirandroid.utils.Constants.PRODUCT_ARGUMENT_KEY
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
@@ -44,26 +42,30 @@ fun MainNavGraph(navController: NavHostController) {
         composable(route = BottomNavItemScreen.Cart.route) {
             CartScreen(navController = navController)
         }
+
+        // NEW: Tambahkan Komunitas di antara Cart dan About
         composable(route = BottomNavItemScreen.Komunitas.route) {
+            // ASUMSI: Anda membuat KomunitasScreen() tanpa parameter wajib
             KomunitasScreen()
         }
+
         composable(route = BottomNavItemScreen.About.route) {
             AboutScreen(navController = navController)
         }
+
         composable(route = Screen.EditProfile.route) {
             EditProfileScreen(navController = navController)
         }
 
-        // Collection Graph
-        collectionNavGraph(navController = navController)
-
-        // Other screens
+        // Checkout and Invoice Screens
         composable(route = Screen.Checkout.route) {
             CheckoutScreen(navController = navController)
         }
         composable(route = Screen.Invoice.route) {
             InvoiceScreen(navController = navController)
         }
+
+        // Search Graph dengan dukungan query parameter (optional)
         composable(
             route = Screen.Search.route,
             arguments = listOf(navArgument("query") {
@@ -74,6 +76,8 @@ fun MainNavGraph(navController: NavHostController) {
         ) {
             SearchScreen()
         }
+
+        // Product List Graph (Category / See All)
         composable(
             route = Screen.ProductList.route,
             arguments = listOf(navArgument("title") {
@@ -81,8 +85,9 @@ fun MainNavGraph(navController: NavHostController) {
             })
         ) { entry ->
             val title = entry.arguments?.getString("title") ?: "Products"
-            val homeViewModel: HomeViewModel = hiltViewModel()
+            val homeViewModel: HomeViewModel = hiltViewModel() // Reuse HomeViewModel for cart logic
             val context = LocalContext.current
+
             ProductListScreen(
                 navController = navController,
                 title = title,
@@ -91,23 +96,8 @@ fun MainNavGraph(navController: NavHostController) {
                 }
             )
         }
-        detailsNavGraph()
-    }
-}
 
-fun NavGraphBuilder.collectionNavGraph(navController: NavHostController) {
-    navigation(
-        startDestination = Screen.Collection.route,
-        route = "collection_graph"
-    ) {
-        composable(Screen.Collection.route) { backStackEntry ->
-            val viewModel: CollectionViewModel = hiltViewModel(navController.getBackStackEntry("collection_graph"))
-            CollectionScreen(navController = navController, viewModel = viewModel)
-        }
-        composable(Screen.AddCollection.route) { backStackEntry ->
-            val viewModel: CollectionViewModel = hiltViewModel(navController.getBackStackEntry("collection_graph"))
-            AddCollectionScreen(navController = navController, viewModel = viewModel)
-        }
+        detailsNavGraph()
     }
 }
 
@@ -118,7 +108,7 @@ fun NavGraphBuilder.detailsNavGraph() {
     ) {
         composable(
             route = Screen.Details.route,
-            arguments = listOf(navArgument(Constants.PRODUCT_ARGUMENT_KEY) {
+            arguments = listOf(navArgument(PRODUCT_ARGUMENT_KEY) {
                 type = NavType.IntType
             })
         ) {

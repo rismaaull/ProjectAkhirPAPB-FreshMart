@@ -17,5 +17,6 @@ data class ProductItem(
     val review: Double,
     var isCart: Boolean = false,
     var quantity: Int = 1,
-    var reviews: List<Review> = emptyList() // Add this line
+    var reviews: List<Review> = emptyList(),
+    val category: String // Add category property
 )

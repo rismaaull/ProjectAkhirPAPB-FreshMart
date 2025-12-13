@@ -125,7 +125,8 @@ fun ItemProductPreview() {
             unit = "7pcs, Priceg",
             price = 4.99,
             nutritions = "100gr",
-            review = 4.0
+            review = 4.0,
+            category = "Buah & Sayur" // Added the missing parameter
         ),
         navController = rememberNavController(),
         onClickToCart = {}

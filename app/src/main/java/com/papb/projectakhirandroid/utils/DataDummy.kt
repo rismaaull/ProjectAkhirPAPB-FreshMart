@@ -19,6 +19,7 @@ object DataDummy {
                 price = 15000.0,
                 nutritions = "50gr",
                 review = 3.5,
+                category = "Roti & Snack"
             ),
             ProductItem(
                 id = 2,
@@ -28,7 +29,8 @@ object DataDummy {
                 unit = "10 pcs",
                 price = 25000.0,
                 nutritions = "150gr",
-                review = 5.0
+                review = 5.0,
+                category = "Susu & Telur"
             ),
             ProductItem(
                 id = 3,
@@ -38,7 +40,8 @@ object DataDummy {
                 unit = "1 pcs",
                 price = 35000.0,
                 nutritions = "100gr",
-                review = 4.0
+                review = 4.0,
+                category = "Minyak Goreng & Mentega"
             ),
             ProductItem(
                 id = 4,
@@ -48,7 +51,8 @@ object DataDummy {
                 unit = "1 pcs",
                 price = 12000.0,
                 nutritions = "90gr",
-                review = 4.7
+                review = 4.7,
+                category = "Roti & Snack"
             ),
             ProductItem(
                 id = 5,
@@ -58,7 +62,8 @@ object DataDummy {
                 unit = "250 gr",
                 price = 10000.0,
                 nutritions = "50gr",
-                review = 4.2
+                review = 4.2,
+                category = "Buah & Sayur"
             ),
             ProductItem(
                 id = 6,
@@ -68,7 +73,8 @@ object DataDummy {
                 unit = "1 kaleng",
                 price = 9000.0,
                 nutritions = "10gr",
-                review = 3.8
+                review = 3.8,
+                category = "Minuman"
             ),
             ProductItem(
                 id = 7,
@@ -78,7 +84,8 @@ object DataDummy {
                 unit = "1 kg",
                 price = 45000.0,
                 nutritions = "70gr",
-                review = 3.0
+                review = 3.0,
+                category = "Daging & Ikan"
             ),
             ProductItem(
                 id = 8,
@@ -88,7 +95,8 @@ object DataDummy {
                 unit = "1 botol",
                 price = 18000.0,
                 nutritions = "100gr",
-                review = 4.2
+                review = 4.2,
+                category = "Minuman"
             ),
             ProductItem(
                 id = 9,
@@ -98,7 +106,8 @@ object DataDummy {
                 unit = "1 botol",
                 price = 20000.0,
                 nutritions = "100gr",
-                review = 4.7
+                review = 4.7,
+                category = "Minuman"
             ),
             ProductItem(
                 id = 10,
@@ -108,7 +117,8 @@ object DataDummy {
                 unit = "1 sisir",
                 price = 22000.0,
                 nutritions = "100gr",
-                review = 4.5
+                review = 4.5,
+                category = "Buah & Sayur"
             ),
         )
     }
