@@ -17,6 +17,12 @@ class Repository @Inject constructor(
 
     fun readOnBoardingState(): Flow<Boolean> = dataStore.readOnBoardingState()
 
+    suspend fun saveLoginState(isLoggedIn: Boolean) {
+        dataStore.saveLoginState(isLoggedIn = isLoggedIn)
+    }
+
+    fun readLoginState(): Flow<Boolean> = dataStore.readLoginState()
+
     suspend fun insertProducts(products: List<ProductItem>) =
         localDataSource.insertProducts(products)
 

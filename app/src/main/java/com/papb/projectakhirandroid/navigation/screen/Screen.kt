@@ -6,6 +6,10 @@ sealed class Screen(val route: String) {
 
     object OnBoarding : Screen("on_boarding_screen")
 
+    object Login : Screen("login_screen")
+
+    object Register : Screen("register_screen")
+
     object Search : Screen("search_screen")
 
     // Rute baru untuk list produk berdasarkan kategori atau "See All"

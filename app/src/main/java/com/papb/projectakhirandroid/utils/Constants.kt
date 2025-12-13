@@ -7,6 +7,7 @@ object Constants {
 
     const val ON_BOARDING_NAME = "on_boarding_name"
     const val ON_BOARDING_KEY = "on_boarding_key"
+    const val LOGIN_KEY = "login_key"
 
     const val PRODUCT_ARGUMENT_KEY = "productId"
 

@@ -1,3 +1,4 @@
+
 package com.papb.projectakhirandroid.presentation.screen.onboarding
 
 import androidx.compose.foundation.Image
@@ -33,7 +34,7 @@ fun OnBoardingScreen(
         modifier = modifier.fillMaxSize(),
         onClick = {
             navController.popBackStack()
-            navController.navigate(Graph.MAIN)
+            navController.navigate(Graph.AUTHENTICATION) // Berubah di sini
             onBoardingViewModel.saveOnBoardingState(isCompleted = true)
         }
     )
