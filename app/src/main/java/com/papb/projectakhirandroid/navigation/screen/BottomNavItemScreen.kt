@@ -11,15 +11,15 @@ import androidx.compose.ui.graphics.vector.ImageVector
 
 sealed class BottomNavItemScreen(val route: String, val icon: ImageVector, val title: String) {
 
-    object Home : BottomNavItemScreen("home_screen", Icons.Default.Home, "Shop")
+    object Home : BottomNavItemScreen("home_screen", Icons.Default.Home, "Beranda")
 
-    object Explore : BottomNavItemScreen("explore_screen", Icons.Default.Search, "Explore")
+    object Explore : BottomNavItemScreen("explore_screen", Icons.Default.Search, "Cari")
 
-    object Cart : BottomNavItemScreen("cart_screen", Icons.Default.ShoppingCart, "Cart")
+    object Cart : BottomNavItemScreen("cart_screen", Icons.Default.ShoppingCart, "Troli")
 
     // NEW: Tambahkan Komunitas di antara Cart dan About
-    object Komunitas : BottomNavItemScreen("komunitas_screen", Icons.Default.Person, "Komunitas")
+    object Komunitas : BottomNavItemScreen("komunitas_screen", Icons.Default.Person, "Forum")
 
-    object About : BottomNavItemScreen("about_screen", Icons.Default.Person, "About")
+    object About : BottomNavItemScreen("about_screen", Icons.Default.Person, "Akun")
 
 }
