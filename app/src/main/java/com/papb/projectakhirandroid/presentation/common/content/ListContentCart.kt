@@ -135,7 +135,8 @@ fun ContentCartPreview() {
             price = 4.99,
             quantity = 2, // Simulasi 2 item
             nutritions = "100gr",
-            review = 4.0
+            review = 4.0,
+            category = "Buah & Sayur" // Added the missing parameter
         ),
         onClickDeleteCart = {}
     )

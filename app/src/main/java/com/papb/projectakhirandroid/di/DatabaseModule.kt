@@ -23,7 +23,7 @@ object DatabaseModule {
         context,
         ProductDatabase::class.java,
         PRODUCT_DATABASE
-    ).build()
+    ).fallbackToDestructiveMigration().build()
 
     @Provides
     @Singleton

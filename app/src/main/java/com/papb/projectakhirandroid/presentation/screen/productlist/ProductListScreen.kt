@@ -29,7 +29,8 @@ fun ProductListScreen(
     val filteredProducts = when (title) {
         "Rekomendasi" -> allProducts.filter { it.id % 2 != 0 }
         "Terlaris" -> allProducts.sortedByDescending { it.id }
-        else -> allProducts
+        "Buah & Sayur Segar" -> allProducts.filter { it.category == "Buah & Sayur" }
+        else -> allProducts.filter { it.category == title.replace("\n", " ") }
     }
 
     Scaffold(

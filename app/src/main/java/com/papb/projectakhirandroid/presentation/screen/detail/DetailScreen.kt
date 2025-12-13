@@ -541,7 +541,8 @@ fun DetailScreenImageHeaderPreview() {
             unit = "7pcs, Priceg",
             price = 4.99,
             nutritions = "100gr",
-            review = 4.0
+            review = 4.0,
+            category = "Buah & Sayur"
         )
     )
 }
@@ -562,7 +563,8 @@ fun DetailContentDescriptionPreview() {
             reviews = listOf(
                 Review(1, "John Doe", R.drawable.profile_picture_placeholder, 4, "Great product!"),
                 Review(2, "Jane Smith", R.drawable.profile_picture_placeholder, 5, "Amazing quality!")
-            )
+            ),
+            category = "Buah & Sayur"
         ),
         onQuantityChange = {}
     )
