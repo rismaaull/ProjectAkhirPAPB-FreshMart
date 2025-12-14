@@ -9,15 +9,22 @@ sealed class Screen(val route: String) {
     object Login : Screen("login_screen")
 
     object Register : Screen("register_screen")
-    
+
     object Main : Screen("main_graph")
 
     object Search : Screen("search_screen")
+
+    // Rute Komunitas: Tambahkan AddPost
+    object AddPost : Screen("add_post_screen/{postType}") {
+        fun createRoute(postType: String): String = "add_post_screen/$postType"
+    }
 
     // Rute baru untuk list produk berdasarkan kategori atau \"See All\"
     object ProductList : Screen("product_list_screen/{title}") {
         fun passTitle(title: String): String = "product_list_screen/$title"
     }
+
+    // ... (Rute lainnya tetap sama)
 
     object Details : Screen("details_screen/{productId}") {
         fun passProductId(productId: Int): String = "details_screen/$productId"

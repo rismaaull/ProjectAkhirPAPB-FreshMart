@@ -4,28 +4,30 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.papb.projectakhirandroid.navigation.screen.Screen
+import com.papb.projectakhirandroid.navigation.screen.Screen // <-- PASTIKAN IMPOR INI BENAR
 import com.papb.projectakhirandroid.presentation.screen.MainScreen
-import com.papb.projectakhirandroid.presentation.screen.login.LoginScreen
-import com.papb.projectakhirandroid.presentation.screen.register.RegisterScreen
+import com.papb.projectakhirandroid.presentation.screen.onboarding.OnBoardingScreen
+import com.papb.projectakhirandroid.presentation.screen.splash.SplashScreen
 
 @Composable
 fun RootNavigationGraph(navController: NavHostController) {
     NavHost(
         navController = navController,
-        route = Graph.ROOT, 
-        startDestination = Screen.Login.route
+        route = Graph.ROOT,
+        startDestination = Screen.Splash.route
     ) {
-        composable(route = Screen.Login.route) {
-            LoginScreen(navController = navController)
+        composable(route = Screen.Splash.route) {
+            SplashScreen(navController = navController)
         }
 
-        composable(route = Screen.Register.route) {
-            RegisterScreen(navController = navController)
+        composable(route = Screen.OnBoarding.route) {
+            OnBoardingScreen(navController = navController)
         }
 
+        // Memanggil MainScreen secara langsung setelah impor diperbaiki
         composable(route = Screen.Main.route) {
             MainScreen()
         }
     }
 }
+    

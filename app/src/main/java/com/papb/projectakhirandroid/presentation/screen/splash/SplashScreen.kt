@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import com.papb.projectakhirandroid.navigation.screen.Screen
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.painterResource
@@ -19,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.papb.projectakhirandroid.R
-import com.papb.projectakhirandroid.navigation.screen.Screen
+import com.papb.projectakhirandroid.navigation.graph.Graph
 import com.papb.projectakhirandroid.ui.theme.Green
 import kotlinx.coroutines.delay
 
@@ -44,11 +45,8 @@ fun SplashScreen(
         delay(1200L)
         navController.popBackStack()
 
-        if (onBoardingIsCompleted) {
-            navController.navigate(Screen.Login.route)
-        } else {
-            navController.navigate(Screen.OnBoarding.route)
-        }
+        if (onBoardingIsCompleted) navController.navigate(Graph.MAIN)
+        else navController.navigate(Screen.OnBoarding.route)
     }
 
     Splash(scale = scale.value)

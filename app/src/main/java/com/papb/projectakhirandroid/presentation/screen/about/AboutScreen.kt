@@ -21,8 +21,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.papb.projectakhirandroid.R
 import com.papb.projectakhirandroid.navigation.screen.Screen
+import com.papb.projectakhirandroid.R
 import com.papb.projectakhirandroid.presentation.common.card.ProfileCard
 import com.papb.projectakhirandroid.presentation.common.content.ListContentAbout
 import com.papb.projectakhirandroid.ui.theme.*
