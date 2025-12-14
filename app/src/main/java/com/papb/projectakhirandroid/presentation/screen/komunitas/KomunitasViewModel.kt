@@ -1,59 +1,77 @@
 package com.papb.projectakhirandroid.presentation.screen.komunitas
 
-import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.papb.projectakhirandroid.R // Import R untuk mengakses resource ID
 import com.papb.projectakhirandroid.domain.model.Post
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
+import android.net.Uri // Diperlukan karena Post.imageUrl bertipe Uri?
 
+class KomunitasViewModel(/* ... dependencies ... */) : ViewModel() {
 
-@HiltViewModel
-class KomunitasViewModel @Inject constructor(
-    // private val repository: PostRepository
-) : ViewModel() {
-
+    // Daftar Postingan yang akan di-display di KomunitasScreen
     private val _posts = MutableStateFlow<List<Post>>(emptyList())
     val posts: StateFlow<List<Post>> = _posts
 
     init {
-        loadInitialPosts()
+        // Memuat data awal/dummy
+        _posts.value = initialDummyPosts()
     }
 
-    private fun loadInitialPosts() {
+    /**
+     * Menyimpan atau memperbarui Postingan.
+     * Jika ID sudah ada (ID != 0L), maka EDIT. Jika ID == 0L, maka ADD/CREATE.
+     */
+    fun savePost(post: Post) {
         viewModelScope.launch {
-            val packageName = R::class.java.getPackage()?.name ?: ""
+            val currentPosts = _posts.value.toMutableList()
 
-            val dummyPosts = listOf(
-                Post(
-                    id = 1,
-                    type = "resep",
-                    title = "Nasi Goreng Sehat",
-                    description = "Resep nasi goreng rendah garam, lezat tanpa MSG tambahan. Cocok untuk diet harian!",
-                    // Menggunakan food_resep
-                    imageUrl = Uri.parse("android.resource://$packageName/${R.drawable.food_resep}"),
-                    owner = "admin_chef"
-                ),
-                Post(
-                    id = 2,
-                    type = "tips",
-                    title = "Cara Menyimpan Sayur",
-                    description = "Tips agar sayuran tetap segar lebih lama. Simpan di wadah kedap udara yang dilapisi tisu dapur.",
-                    // Menggunakan food_tips
-                    imageUrl = Uri.parse("android.resource://$packageName/${R.drawable.food_tips}"),
-                    owner = "admin_dapur"
-                )
-            )
-            _posts.value = dummyPosts
-            // --- GANTI DENGAN LOGIKA REPOSITORY ANDA ---
+            if (post.id != 0L) { // Cek menggunakan Long
+                // EDIT: Cari berdasarkan ID dan Ganti
+                val existingPostIndex = currentPosts.indexOfFirst { it.id == post.id }
+                if (existingPostIndex >= 0) {
+                    currentPosts[existingPostIndex] = post
+                }
+            } else {
+                // ADD/CREATE: Beri ID baru (tipe Long)
+                val newId = (currentPosts.maxOfOrNull { it.id } ?: 0L) + 1L // ID baru bertipe Long
+                currentPosts.add(post.copy(id = newId))
+            }
+            _posts.value = currentPosts.toList()
+            // TODO: Panggil repository untuk menyimpan ke database di skenario nyata
         }
     }
 
-    fun addPost(post: Post) {
-        // Logika menambahkan post ke repository
+    /**
+     * Menghapus Postingan dari daftar.
+     */
+    fun deletePost(post: Post) {
+        viewModelScope.launch {
+            _posts.value = _posts.value.filter { it.id != post.id }
+            // TODO: Panggil repository untuk menghapus dari database
+        }
     }
+}
+
+// Data dummy untuk inisialisasi awal
+private fun initialDummyPosts(): List<Post> {
+    return listOf(
+        Post(
+            id = 1L, // ID bertipe Long
+            type = "resep",
+            title = "Resep Ayam Hijau Sehat",
+            description = "Resep ayam tinggi protein dan rendah karbohidrat yang mudah dibuat di rumah.",
+            imageUrl = null,
+            owner = "Chef_Budi"
+        ),
+        Post(
+            id = 2L, // ID bertipe Long
+            type = "tips",
+            title = "Tips Hemat Belanja Mingguan",
+            description = "Cara menyusun menu dan belanja untuk menghemat 30% pengeluaran dapur.",
+            imageUrl = null,
+            owner = "User_Dina"
+        )
+    )
 }
