@@ -3,10 +3,9 @@ package com.papb.projectakhirandroid.presentation.screen.home
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
 import com.papb.projectakhirandroid.domain.model.ProductItem
 import com.papb.projectakhirandroid.domain.usecase.UseCases
-import kotlinx.coroutines.Dispatchers
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -24,7 +23,7 @@ class HomeViewModel @Inject constructor(
     val productList = _productList.asStateFlow()
 
     init {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             useCases.getAllProductUseCase.invoke().collect { value ->
                 _productList.value = value
             }
