@@ -5,11 +5,16 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.papb.projectakhirandroid.data.dataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
+import io.github.jan.supabase.SupabaseClient
+import io.github.jan.supabase.gotrue.auth
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class UserRepository @Inject constructor(@ApplicationContext private val context: Context) {
+class UserRepository @Inject constructor(
+    @ApplicationContext private val context: Context,
+    private val supabaseClient: SupabaseClient
+    ) {
 
     private object PreferencesKeys {
         val NAME = stringPreferencesKey("name")
@@ -51,5 +56,6 @@ class UserRepository @Inject constructor(@ApplicationContext private val context
         context.dataStore.edit {
             it.clear()
         }
+        supabaseClient.auth.signOut()
     }
 }

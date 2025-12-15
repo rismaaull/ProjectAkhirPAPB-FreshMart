@@ -35,6 +35,9 @@ import androidx.navigation.NavBackStackEntry
 
 // ✅ PERBAIKAN: Import Graph agar MAIN dan DETAILS dikenali
 import com.papb.projectakhirandroid.navigation.graph.Graph
+import com.papb.projectakhirandroid.presentation.screen.collection.AddCollectionScreen
+import com.papb.projectakhirandroid.presentation.screen.collection.CollectionScreen
+import com.papb.projectakhirandroid.utils.Constants
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
@@ -177,7 +180,7 @@ fun NavGraphBuilder.detailsNavGraph(navController: NavHostController) {
     }
 }
 
-// ==== Collection Graph ====
+/// ==== Collection Graph ====
 fun NavGraphBuilder.collectionNavGraph(navController: NavHostController) {
     navigation(
         route = "collection_graph",

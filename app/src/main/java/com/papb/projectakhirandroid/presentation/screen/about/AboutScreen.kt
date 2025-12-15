@@ -70,7 +70,7 @@ fun AboutScreen(
 
         ListContentAbout(onItemClick = {
             if (it == "Koleksi") {
-                navController.navigate("collection_graph")
+                navController.navigate(Screen.Collection.route)
             }
         })
 

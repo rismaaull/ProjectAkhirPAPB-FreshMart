@@ -1,5 +1,6 @@
 package com.papb.projectakhirandroid.di
 
+import com.papb.projectakhirandroid.data.SupabaseClientProvider
 import com.papb.projectakhirandroid.data.local.ProductDatabase
 import com.papb.projectakhirandroid.data.repository.LocalDataSourceImpl
 import com.papb.projectakhirandroid.data.repository.OnBoardingOperationImpl
@@ -10,11 +11,16 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import io.github.jan.supabase.SupabaseClient
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object RepositoryModule {
+
+    @Provides
+    @Singleton
+    fun provideSupabaseClient(): SupabaseClient = SupabaseClientProvider.client
 
     @Provides
     @Singleton

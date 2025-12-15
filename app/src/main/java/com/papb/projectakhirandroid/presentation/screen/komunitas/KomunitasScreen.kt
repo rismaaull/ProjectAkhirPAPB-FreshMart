@@ -25,6 +25,7 @@ import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.papb.projectakhirandroid.R
 import com.papb.projectakhirandroid.domain.model.Post
+import com.papb.projectakhirandroid.navigation.screen.Screen
 import com.papb.projectakhirandroid.ui.theme.* // Asumsi ini berisi DIMENS, TEXT_SIZE, dan Colors
 import com.papb.projectakhirandroid.utils.Utils
 
@@ -66,9 +67,9 @@ fun KomunitasScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    // Navigasi ke AddPostScreen dengan tipe yang sesuai (postId=0L untuk ADD)
                     val postTypeNav = if (selectedTabIndex == 0) "resep" else "tips"
-                    navController.navigate("add_post/$postTypeNav?postId=0")
+                    // ✅ PERBAIKAN: Menggunakan route yang benar dan format postId yang sesuai (tanpa "L")
+                    navController.navigate("${Screen.AddPost.route}?postType=$postTypeNav&postId=0")
                 },
                 backgroundColor = Green,
                 contentColor = Color.White
@@ -124,8 +125,8 @@ fun KomunitasScreen(
                     PostItem(
                         post = post,
                         onEdit = { postToEdit ->
-                            // Mengirim ID bertipe Long
-                            navController.navigate("add_post_screen/${postToEdit.type}?postId=${postToEdit.id}")
+                            // ✅ PERBAIKAN: Menggunakan route yang benar dengan query parameter
+                            navController.navigate("${Screen.AddPost.route}?postType=${postToEdit.type}&postId=${postToEdit.id}")
                         },
                         onDelete = { postToDelete ->
                             viewModel.deletePost(postToDelete)
@@ -134,7 +135,6 @@ fun KomunitasScreen(
                     )
                 }
 
-                // ✅ PERBAIKAN: Membungkus Spacer dalam 'item {}' untuk LazyColumn
                 item {
                     Spacer(modifier = Modifier.height(DIMENS_64dp))
                 }
@@ -167,12 +167,10 @@ fun PostItem(post: Post, onEdit: (Post) -> Unit, onDelete: (Post) -> Unit) {
                 Spacer(modifier = Modifier.width(DIMENS_8dp))
                 Column(modifier = Modifier.weight(1f)) {
                     Text(text = post.owner, fontWeight = FontWeight.Bold, fontSize = TEXT_SIZE_14sp, color = Color.Black)
-                    // Mengubah 'Tips Diet' menjadi 'Tips Dapur' agar konsisten dengan Tab
                     val typeText = if (post.type == "resep") "Resep" else "Tips Dapur"
                     Text(text = typeText, fontWeight = FontWeight.Medium, fontSize = TEXT_SIZE_12sp, color = GraySecondTextColor)
                 }
 
-                // Aksi Edit dan Delete
                 IconButton(onClick = { onEdit(post) }) {
                     Icon(Icons.Default.Edit, contentDescription = "Edit Post", tint = Green)
                 }
@@ -181,11 +179,10 @@ fun PostItem(post: Post, onEdit: (Post) -> Unit, onDelete: (Post) -> Unit) {
                 }
             }
 
-            // Gambar Postingan (Jika ada)
-            post.imageUrl?.let { uri ->
+            post.imageUrl?.let {
                 Spacer(modifier = Modifier.height(DIMENS_12dp))
                 Image(
-                    painter = rememberAsyncImagePainter(uri),
+                    painter = rememberAsyncImagePainter(it),
                     contentDescription = "Gambar Postingan",
                     modifier = Modifier
                         .fillMaxWidth()
@@ -197,7 +194,6 @@ fun PostItem(post: Post, onEdit: (Post) -> Unit, onDelete: (Post) -> Unit) {
 
             Spacer(modifier = Modifier.height(DIMENS_12dp))
 
-            // Judul dan Deskripsi
             Text(text = post.title, fontWeight = FontWeight.Bold, fontSize = TEXT_SIZE_16sp, color = Color.Black)
             Spacer(modifier = Modifier.height(DIMENS_4dp))
             Text(text = post.description, fontWeight = FontWeight.Normal, fontSize = TEXT_SIZE_14sp, color = GraySecondTextColor)
