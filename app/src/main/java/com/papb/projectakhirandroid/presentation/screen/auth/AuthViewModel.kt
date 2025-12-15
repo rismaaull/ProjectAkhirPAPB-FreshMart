@@ -71,16 +71,6 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    /**
-     * Fungsi untuk melakukan logout.
-     */
-    fun logout() {
-        viewModelScope.launch {
-            authRepository.signOut()
-            _uiState.update { it.copy(isLoggedIn = false) }
-        }
-    }
-
     fun errorShown() {
         _uiState.update { it.copy(error = null) }
     }

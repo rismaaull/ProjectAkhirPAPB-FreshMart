@@ -42,13 +42,6 @@ class AuthRepository @Inject constructor() {
     }
 
     /**
-     * Melakukan logout untuk user yang sedang aktif.
-     */
-    suspend fun signOut() {
-        authClient.signOut()
-    }
-
-    /**
      * Memeriksa apakah ada user yang sedang login saat ini.
      */
     fun isUserLoggedIn(): Boolean {

@@ -6,7 +6,6 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import com.papb.projectakhirandroid.data.dataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.jan.supabase.SupabaseClient
-import io.github.jan.supabase.gotrue.auth
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -50,12 +49,5 @@ class UserRepository @Inject constructor(
                 preferences.remove(PreferencesKeys.PROFILE_IMAGE_URI)
             }
         }
-    }
-
-    suspend fun logout() {
-        context.dataStore.edit {
-            it.clear()
-        }
-        supabaseClient.auth.signOut()
     }
 }

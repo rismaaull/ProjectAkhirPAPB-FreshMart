@@ -41,8 +41,7 @@ class MainActivity : ComponentActivity() {
                 } else {
                     RootNavigationGraph(
                         navController = navController,
-                        isLoggedIn = uiState.isLoggedIn,
-                        onLogout = authViewModel::logout
+                        isLoggedIn = uiState.isLoggedIn
                     )
                 }
             }

@@ -14,8 +14,7 @@ import com.papb.projectakhirandroid.presentation.screen.register.RegisterScreen
 @Composable
 fun RootNavigationGraph(
     navController: NavHostController,
-    isLoggedIn: Boolean,
-    onLogout: () -> Unit
+    isLoggedIn: Boolean
 ) {
 
     // 🔥 INI KUNCINYA
@@ -58,7 +57,7 @@ fun RootNavigationGraph(
             startDestination = Screen.Home.route
         ) {
             composable(Screen.Home.route) {
-                MainScreen(onLogout = onLogout)
+                MainScreen()
             }
         }
     }

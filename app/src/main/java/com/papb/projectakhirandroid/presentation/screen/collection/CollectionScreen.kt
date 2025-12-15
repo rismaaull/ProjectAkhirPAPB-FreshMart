@@ -32,10 +32,23 @@ import com.papb.projectakhirandroid.ui.theme.*
 fun CollectionScreen(
     navController: NavController
 ) {
+    // Attempt to get the back stack entry for the nested graph safely.
+    // We do this inside remember so it's not re-executed on every recomposition unless backstack changes.
+    // The try-catch is inside the calculation block, not around the composable function.
     val collectionGraphEntry = remember(navController.currentBackStackEntry) {
-        navController.getBackStackEntry("collection_graph")
+        try {
+            navController.getBackStackEntry("collection_graph")
+        } catch (e: Exception) {
+            null
+        }
     }
-    val viewModel: CollectionViewModel = hiltViewModel(collectionGraphEntry)
+
+    // If entry exists, scope ViewModel to it. Otherwise scope to this screen (fallback).
+    val viewModel: CollectionViewModel = if (collectionGraphEntry != null) {
+        hiltViewModel(collectionGraphEntry)
+    } else {
+        hiltViewModel()
+    }
 
     val collections by viewModel.collections.collectAsState()
 

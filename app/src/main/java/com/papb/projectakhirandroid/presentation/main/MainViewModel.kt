@@ -22,10 +22,6 @@ class MainViewModel @Inject constructor(
         _isLoggedIn.value = authRepository.isUserLoggedIn()
     }
 
-    fun onLogout() {
-        _isLoggedIn.value = false
-    }
-
     fun onLoginSuccess() {
         _isLoggedIn.value = true
     }

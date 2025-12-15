@@ -2,28 +2,20 @@ package com.papb.projectakhirandroid.presentation.screen.about
 
 import android.app.Activity
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.papb.projectakhirandroid.R
 import com.papb.projectakhirandroid.navigation.screen.Screen
-import com.papb.projectakhirandroid.presentation.auth.AuthViewModel
 import com.papb.projectakhirandroid.presentation.common.card.ProfileCard
 import com.papb.projectakhirandroid.presentation.common.content.ListContentAbout
 import com.papb.projectakhirandroid.ui.theme.*
@@ -32,11 +24,9 @@ import com.papb.projectakhirandroid.ui.theme.*
 fun AboutScreen(
     modifier: Modifier = Modifier,
     navController: NavController, // Masih dibutuhkan untuk Edit Profile
-    profileViewModel: ProfileViewModel = hiltViewModel(),
-    authViewModel: AuthViewModel = hiltViewModel(),
-    onLogout: () -> Unit = { authViewModel.logout() }
+    profileViewModel: ProfileViewModel = hiltViewModel()
 )
- {
+{
     val activity = LocalContext.current as Activity
     val name by profileViewModel.name.collectAsState()
     val email by profileViewModel.email.collectAsState()
@@ -70,48 +60,12 @@ fun AboutScreen(
 
         ListContentAbout(onItemClick = {
             if (it == "Koleksi") {
+                // Modified here: Navigate directly to the screen, relying on NavGraph logic
                 navController.navigate(Screen.Collection.route)
             }
         })
 
         Spacer(modifier = Modifier.height(DIMENS_32dp))
-
-        ButtonLogout {
-            onLogout()
-        }
-    }
-}
-
-@Composable
-fun ButtonLogout(
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit
-) {
-    Button(
-        modifier = modifier
-            .padding(DIMENS_16dp)
-            .height(DIMENS_48dp)
-            .fillMaxWidth(),
-        shape = RoundedCornerShape(DIMENS_16dp),
-        elevation = ButtonDefaults.elevation(DIMENS_2dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = GrayBackground),
-        onClick = { onClick.invoke() }
-    ) {
-        Icon(
-            imageVector = Icons.Default.ExitToApp,
-            contentDescription = stringResource(R.string.logout),
-            tint = Green
-        )
-
-        Text(
-            modifier = Modifier
-                .fillMaxWidth(),
-            text = stringResource(id = R.string.logout),
-            color = Green,
-            textAlign = TextAlign.Center,
-            fontFamily = GilroyFontFamily,
-            fontWeight = FontWeight.SemiBold,
-        )
     }
 }
 
@@ -144,7 +98,5 @@ fun AboutScreenPreview() {
         ListContentAbout(onItemClick = {})
 
         Spacer(modifier = Modifier.height(DIMENS_32dp))
-
-        ButtonLogout { }
     }
 }

@@ -43,7 +43,6 @@ import com.papb.projectakhirandroid.utils.Constants
 @Composable
 fun MainNavGraph(
     navController: NavHostController,
-    onLogout: () -> Unit,
     modifier: Modifier
 ) {
     NavHost(
@@ -76,7 +75,9 @@ fun MainNavGraph(
         }
 
         composable(route = BottomNavItemScreen.About.route) {
-            AboutScreen(navController = navController)
+            AboutScreen(
+                navController = navController
+            )
         }
 
         // ==== Edit Profile ====

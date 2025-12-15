@@ -50,10 +50,4 @@ class ProfileViewModel @Inject constructor(
             loadProfile() // Reload data after saving
         }
     }
-
-    fun logout() {
-        viewModelScope.launch {
-            userRepository.logout()
-        }
-    }
 }
