@@ -64,8 +64,25 @@ fun AboutScreen(
                 navController.navigate(Screen.Collection.route)
             }
         })
+        
+        Spacer(modifier = Modifier.weight(1f))
 
-        Spacer(modifier = Modifier.height(DIMENS_32dp))
+        Button(
+            onClick = {
+                profileViewModel.logout()
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = DIMENS_16dp, vertical = DIMENS_24dp),
+            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red)
+        ) {
+            Text(
+                text = "Logout",
+                color = Color.White,
+                fontFamily = GilroyFontFamily,
+                fontWeight = FontWeight.SemiBold
+            )
+        }
     }
 }
 
@@ -97,6 +114,21 @@ fun AboutScreenPreview() {
 
         ListContentAbout(onItemClick = {})
 
-        Spacer(modifier = Modifier.height(DIMENS_32dp))
+        Spacer(modifier = Modifier.weight(1f))
+
+        Button(
+            onClick = { },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = DIMENS_16dp, vertical = DIMENS_24dp),
+            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red)
+        ) {
+            Text(
+                text = "Logout",
+                color = Color.White,
+                fontFamily = GilroyFontFamily,
+                fontWeight = FontWeight.SemiBold
+            )
+        }
     }
 }

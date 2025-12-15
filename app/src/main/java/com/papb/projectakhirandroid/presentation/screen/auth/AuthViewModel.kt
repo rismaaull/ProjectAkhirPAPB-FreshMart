@@ -20,14 +20,18 @@ class AuthViewModel @Inject constructor(
     val uiState: StateFlow<AuthUiState> = _uiState.asStateFlow()
 
     init {
-        checkCurrentUser()
+        observeAuthState()
     }
 
     /**
-     * Memeriksa apakah user sudah login saat ViewModel dibuat.
+     * Mengamati perubahan status autentikasi dari Repository.
      */
-    private fun checkCurrentUser() {
-        _uiState.update { it.copy(isLoggedIn = authRepository.isUserLoggedIn()) }
+    private fun observeAuthState() {
+        viewModelScope.launch {
+            authRepository.authState.collect { isLoggedIn ->
+                _uiState.update { it.copy(isLoggedIn = isLoggedIn) }
+            }
+        }
     }
 
     /**
@@ -38,7 +42,7 @@ class AuthViewModel @Inject constructor(
             _uiState.update { it.copy(isLoading = true, error = null) }
             val result = authRepository.login(email, password)
             if (result.isSuccess) {
-                _uiState.update { it.copy(isLoading = false, isLoggedIn = true) }
+                _uiState.update { it.copy(isLoading = false) }
             } else {
                 _uiState.update {
                     it.copy(
@@ -58,8 +62,7 @@ class AuthViewModel @Inject constructor(
             _uiState.update { it.copy(isLoading = true, error = null) }
             val result = authRepository.register(email, password)
             if (result.isSuccess) {
-                // Setelah register berhasil, anggap user langsung login
-                _uiState.update { it.copy(isLoading = false, isLoggedIn = true) }
+                _uiState.update { it.copy(isLoading = false) }
             } else {
                 _uiState.update {
                     it.copy(

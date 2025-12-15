@@ -3,6 +3,7 @@ package com.papb.projectakhirandroid.presentation.screen.about
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.papb.projectakhirandroid.data.repository.AuthRepository
 import com.papb.projectakhirandroid.data.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,7 +13,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
     private val _name = MutableStateFlow("")
@@ -48,6 +50,12 @@ class ProfileViewModel @Inject constructor(
             userRepository.saveEmail(email)
             userRepository.saveProfileImageUri(imageUri?.toString())
             loadProfile() // Reload data after saving
+        }
+    }
+
+    fun logout() {
+        viewModelScope.launch {
+            authRepository.logout()
         }
     }
 }
