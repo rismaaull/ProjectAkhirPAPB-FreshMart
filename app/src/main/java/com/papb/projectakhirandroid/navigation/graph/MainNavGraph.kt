@@ -21,20 +21,19 @@ import com.papb.projectakhirandroid.presentation.screen.home.HomeScreen
 import com.papb.projectakhirandroid.presentation.screen.home.HomeViewModel
 import com.papb.projectakhirandroid.presentation.screen.home.clickToCart
 import com.papb.projectakhirandroid.presentation.screen.invoice.InvoiceScreen
-import com.papb.projectakhirandroid.presentation.screen.komunitas.AddPostScreen
 import com.papb.projectakhirandroid.presentation.screen.komunitas.KomunitasScreen
 import com.papb.projectakhirandroid.presentation.screen.productlist.ProductListScreen
 import com.papb.projectakhirandroid.presentation.screen.search.SearchScreen
 import com.papb.projectakhirandroid.utils.Constants.PRODUCT_ARGUMENT_KEY
 
 // ✅ PERBAIKAN: Import Graph agar MAIN dan DETAILS dikenali
-import com.papb.projectakhirandroid.navigation.graph.Graph
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun MainNavGraph(
     navController: NavHostController,
-    onLogout: () -> Unit
+    onLogout: () -> Unit,
+    modifier: Modifier
 ) {
     NavHost(
         navController = navController,
@@ -52,10 +51,8 @@ fun MainNavGraph(
             CartScreen(navController = navController)
         }
 
-        // NEW: Tambahkan Komunitas di antara Cart dan About
         composable(route = BottomNavItemScreen.Komunitas.route) {
-            // ASUMSI: Anda membuat KomunitasScreen() tanpa parameter wajib
-            KomunitasScreen()
+            KomunitasScreen(navController = navController)
         }
 
         composable(route = BottomNavItemScreen.About.route) {

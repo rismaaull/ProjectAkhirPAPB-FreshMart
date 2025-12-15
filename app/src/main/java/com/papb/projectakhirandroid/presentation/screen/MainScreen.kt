@@ -1,6 +1,5 @@
 package com.papb.projectakhirandroid.presentation.screen
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Scaffold
@@ -16,7 +15,8 @@ import com.papb.projectakhirandroid.ui.theme.DIMENS_32dp
 
 @Composable
 fun MainScreen(
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController = rememberNavController(),
+    onLogout: () -> Unit
 ) {
     Scaffold(
         bottomBar = {
@@ -27,19 +27,11 @@ fun MainScreen(
                 BottomBar(navController = navController)
             }
         },
-    ) {
-        Column(
-            modifier = Modifier.padding(it)
-        ) {
-            MainNavGraph(navController = navController)
-        }
-    ) { paddingValues -> // ✅ TANGKAP paddingValues DI SINI
-
-        // ✅ PERBAIKAN: Terapkan paddingValues ke MainNavGraph
+    ) { paddingValues ->
         MainNavGraph(
             navController = navController,
-            modifier = Modifier.padding(paddingValues) // Menerapkan padding yang disediakan Scaffold
+            modifier = Modifier.padding(paddingValues),
+            onLogout = onLogout
         )
     }
-
 }
