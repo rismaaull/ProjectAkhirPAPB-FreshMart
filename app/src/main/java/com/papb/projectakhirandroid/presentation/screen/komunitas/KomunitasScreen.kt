@@ -20,13 +20,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.hilt.navigation.compose.hiltViewModel
+// import androidx.hilt.navigation.compose.hiltViewModel // TIDAK DIGUNAKAN KARENA DIKIRIM DARI NAVGRAPH
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.papb.projectakhirandroid.R
 import com.papb.projectakhirandroid.domain.model.Post
-import com.papb.projectakhirandroid.ui.theme.* // Asumsi ini berisi DIMENS, TEXT_SIZE, dan Colors
-import com.papb.projectakhirandroid.utils.Utils
+import com.papb.projectakhirandroid.ui.theme.* import com.papb.projectakhirandroid.utils.Utils
+import com.papb.projectakhirandroid.navigation.screen.Screen
 
 // Definisi Tab
 private val tabTitles = listOf("Resep", "Tips Dapur")
@@ -34,7 +34,8 @@ private val tabTitles = listOf("Resep", "Tips Dapur")
 @Composable
 fun KomunitasScreen(
     navController: NavController,
-    viewModel: KomunitasViewModel = hiltViewModel()
+    // 🚨 FIX 1: Hapus hiltViewModel() default, ViewModel datang dari NavGraph
+    viewModel: KomunitasViewModel
 ) {
     // Mengambil daftar postingan dari ViewModel
     val posts by viewModel.posts.collectAsState()
@@ -66,9 +67,9 @@ fun KomunitasScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    // Navigasi ke AddPostScreen dengan tipe yang sesuai (postId=0L untuk ADD)
+                    // Navigasi ke AddPostScreen menggunakan Query Parameter
                     val postTypeNav = if (selectedTabIndex == 0) "resep" else "tips"
-                    navController.navigate("add_post/$postTypeNav?postId=0")
+                    navController.navigate("${Screen.AddPost.route}?postType=$postTypeNav&postId=0")
                 },
                 backgroundColor = Green,
                 contentColor = Color.White
@@ -82,11 +83,11 @@ fun KomunitasScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            // Bagian Tab
-            ScrollableTabRow(
+            // 🚨 FIX 2: Menggunakan TabRow (bukan ScrollableTabRow) untuk lebar 50/50
+            TabRow(
                 selectedTabIndex = selectedTabIndex,
                 backgroundColor = Color.White,
-                edgePadding = DIMENS_16dp,
+                // edgePadding Dihapus
                 indicator = { tabPositions ->
                     TabRowDefaults.Indicator(
                         Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex]),
@@ -97,6 +98,8 @@ fun KomunitasScreen(
             ) {
                 tabTitles.forEachIndexed { index, title ->
                     Tab(
+                        // 🚨 FIX 2: Modifier.weight(1f) memastikan kedua tab memiliki lebar yang sama
+                        modifier = Modifier.weight(1f),
                         selected = selectedTabIndex == index,
                         onClick = { selectedTabIndex = index },
                         text = {
@@ -124,8 +127,8 @@ fun KomunitasScreen(
                     PostItem(
                         post = post,
                         onEdit = { postToEdit ->
-                            // Mengirim ID bertipe Long
-                            navController.navigate("add_post/${postToEdit.type}?postId=${postToEdit.id}")
+                            // Navigasi ke Edit menggunakan Query Parameter
+                            navController.navigate("${Screen.AddPost.route}?postType=${postToEdit.type}&postId=${postToEdit.id}")
                         },
                         onDelete = { postToDelete ->
                             viewModel.deletePost(postToDelete)
@@ -134,7 +137,6 @@ fun KomunitasScreen(
                     )
                 }
 
-                // ✅ PERBAIKAN: Membungkus Spacer dalam 'item {}' untuk LazyColumn
                 item {
                     Spacer(modifier = Modifier.height(DIMENS_64dp))
                 }
@@ -167,7 +169,9 @@ fun PostItem(post: Post, onEdit: (Post) -> Unit, onDelete: (Post) -> Unit) {
                 Spacer(modifier = Modifier.width(DIMENS_8dp))
                 Column(modifier = Modifier.weight(1f)) {
                     Text(text = post.owner, fontWeight = FontWeight.Bold, fontSize = TEXT_SIZE_14sp, color = Color.Black)
-                    Text(text = if (post.type == "resep") "Resep" else "Tips Diet", fontWeight = FontWeight.Medium, fontSize = TEXT_SIZE_12sp, color = GraySecondTextColor)
+                    // Mengubah 'Tips Diet' menjadi 'Tips Dapur' agar konsisten dengan Tab
+                    val typeText = if (post.type == "resep") "Resep" else "Tips Dapur"
+                    Text(text = typeText, fontWeight = FontWeight.Medium, fontSize = TEXT_SIZE_12sp, color = GraySecondTextColor)
                 }
 
                 // Aksi Edit dan Delete

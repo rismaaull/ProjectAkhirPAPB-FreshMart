@@ -1,5 +1,3 @@
-// File: app/src/main/java/com/papb/projectakhirandroid/navigation/graph/MainNavGraph.kt
-
 package com.papb.projectakhirandroid.navigation.graph
 
 import androidx.compose.runtime.Composable
@@ -28,6 +26,11 @@ import com.papb.projectakhirandroid.presentation.screen.productlist.ProductListS
 import com.papb.projectakhirandroid.presentation.screen.search.SearchScreen
 import com.papb.projectakhirandroid.utils.Constants.PRODUCT_ARGUMENT_KEY
 
+// 🚨 IMPORT TAMBAHAN UNTUK SHARED VIEWMODEL
+import com.papb.projectakhirandroid.presentation.screen.komunitas.KomunitasViewModel
+import androidx.compose.runtime.remember
+import androidx.navigation.NavBackStackEntry
+
 // ✅ PERBAIKAN: Import Graph agar MAIN dan DETAILS dikenali
 import com.papb.projectakhirandroid.navigation.graph.Graph
 
@@ -36,7 +39,6 @@ import com.papb.projectakhirandroid.navigation.graph.Graph
 fun MainNavGraph(navController: NavHostController, modifier: Modifier = Modifier) {
     NavHost(
         navController = navController,
-        // ✅ Graph.MAIN sekarang dikenali
         route = Graph.MAIN,
         startDestination = BottomNavItemScreen.Home.route,
         modifier = modifier
@@ -51,9 +53,18 @@ fun MainNavGraph(navController: NavHostController, modifier: Modifier = Modifier
         composable(route = BottomNavItemScreen.Cart.route) {
             CartScreen(navController = navController)
         }
-        composable(route = BottomNavItemScreen.Komunitas.route) {
-            KomunitasScreen(navController = navController)
+
+        // --- Komunitas Screen (Induk - Inisialisasi Shared ViewModel) ---
+        composable(route = BottomNavItemScreen.Komunitas.route) { backStackEntry ->
+            // ✅ FIX 1: Inisialisasi ViewModel terikat ke NavBackStackEntry ini
+            val komunitasViewModel: KomunitasViewModel = hiltViewModel(backStackEntry)
+
+            KomunitasScreen(
+                navController = navController,
+                viewModel = komunitasViewModel // ⬅️ Teruskan instance
+            )
         }
+
         composable(route = BottomNavItemScreen.About.route) {
             AboutScreen(navController = navController)
         }
@@ -63,12 +74,14 @@ fun MainNavGraph(navController: NavHostController, modifier: Modifier = Modifier
             EditProfileScreen(navController = navController)
         }
 
-        // ADD/EDIT POST SCREEN
+        // --- ADD/EDIT POST SCREEN (Anak - Mengambil Shared ViewModel) ---
         composable(
-            route = "${Screen.AddPost.route}/{postType}?postId={postId}",
+            route = "${Screen.AddPost.route}?postType={postType}&postId={postId}",
             arguments = listOf(
                 navArgument("postType") {
                     type = NavType.StringType
+                    defaultValue = "resep"
+                    nullable = true
                 },
                 navArgument("postId") {
                     type = NavType.LongType
@@ -79,10 +92,20 @@ fun MainNavGraph(navController: NavHostController, modifier: Modifier = Modifier
             val postType = backStackEntry.arguments?.getString("postType") ?: "resep"
             val postId = backStackEntry.arguments?.getLong("postId") ?: 0L
 
+            // ✅ FIX 2: Ambil instance ViewModel yang SAMA dari rute Komunitas
+            val parentEntry: NavBackStackEntry = remember(backStackEntry) {
+                // Mendapatkan NavBackStackEntry dari KomunitasScreen
+                navController.getBackStackEntry(BottomNavItemScreen.Komunitas.route)
+            }
+
+            // Menggunakan hiltViewModel dengan parentEntry memastikan instance yang dishare
+            val sharedViewModel: KomunitasViewModel = hiltViewModel(parentEntry)
+
             AddPostScreen(
                 navController = navController,
                 postType = postType,
-                postId = postId
+                postId = postId,
+                viewModel = sharedViewModel // ⬅️ Teruskan instance yang dishare
             )
         }
 
@@ -132,7 +155,6 @@ fun MainNavGraph(navController: NavHostController, modifier: Modifier = Modifier
 
 fun NavGraphBuilder.detailsNavGraph(navController: NavHostController) {
     navigation(
-        // ✅ Graph.DETAILS sekarang dikenali
         route = Graph.DETAILS,
         startDestination = Screen.Details.route
     ) {
